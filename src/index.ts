@@ -8,7 +8,7 @@ export const InitializeHandShake = (apiley: string, storeId: string, userId: str
   GlobalstoreId = storeId;
 };
 
-export const getCartItems = (store: string, quest: string, resolve: (result: object) => void) => {
+export const getCartItems = (resolve: (result: object) => void) => {
   fetch('https://fingertipps.store/getcart', {
     method: 'post',
     headers: {
@@ -29,8 +29,6 @@ export const getCartItems = (store: string, quest: string, resolve: (result: obj
 };
 
 export const addToCart = (
-  visitorId: string,
-  storeId: string,
   item: { price: number; photos: Array<String>; _id: string; name: string; choosenSize: string; choosenColor: string },
   resolveFunction: (result: number) => void,
   errorCatcher: (result: string) => void,
@@ -69,8 +67,6 @@ export const addToCart = (
 };
 
 export const increaseItemCount = (
-  visitorId: string,
-  storeId: string,
   item: { _id: string; name: string; choosenColor: string; choosenSize: string },
   resolve: () => void,
 ) => {
@@ -83,8 +79,8 @@ export const increaseItemCount = (
     },
     body: JSON.stringify({
       id: item._id,
-      owner: visitorId,
-      store: storeId,
+      owner: GloabaluserId,
+      store: GloabaluserId,
       name: item.name,
       choosenColor: item.choosenColor,
       choosenSize: item.choosenSize,
@@ -98,8 +94,6 @@ export const increaseItemCount = (
 };
 
 export const decreaseItemCount = (
-  visitorId: string,
-  storeId: string,
   item: { _id: string; name: string; choosenColor: string; choosenSize: string },
   resolve: () => void,
 ) => {
@@ -111,8 +105,8 @@ export const decreaseItemCount = (
     },
     body: JSON.stringify({
       id: item._id,
-      owner: visitorId,
-      store: storeId,
+      owner: GloabaluserId,
+      store: GlobalstoreId,
       name: item.name,
       choosenColor: item.choosenColor,
       choosenSize: item.choosenSize,
@@ -126,8 +120,6 @@ export const decreaseItemCount = (
 };
 
 export const deleteSingleCartItem = (
-  visitorId: string,
-  storeId: string,
   item: { _id: string; name: string; choosenColor: string; choosenSize: string },
   resolve: (data: number) => void,
 ) => {
@@ -139,8 +131,8 @@ export const deleteSingleCartItem = (
     },
     body: JSON.stringify({
       id: item._id,
-      owner: visitorId,
-      store: storeId,
+      owner: GloabaluserId,
+      store: GlobalstoreId,
       name: item.name,
       choosenColor: item.choosenColor,
       choosenSize: item.choosenSize,
@@ -163,8 +155,6 @@ export const deleteSingleCartItem = (
 };
 
 export const savePaymentRecord = (
-  visitorId: string,
-  storeId: string,
   reference: string,
   total: number,
   address: string,
@@ -184,22 +174,20 @@ export const savePaymentRecord = (
         Authorization: 'Bearer ' + localStorage.getItem('jwt'),
       },
       body: JSON.stringify({
-        senderId: visitorId,
-        receiverId: storeId,
+        senderId: GloabaluserId,
+        receiverId: GlobalstoreId,
         total,
         reference,
       }),
     })
       .then((res) => res.json())
       .then((result) => {
-        saveOrder(visitorId, storeId, result.convo._id, address, phoneNumber, email, name, total, itemsInCart, resolve);
+        saveOrder(result.convo._id, address, phoneNumber, email, name, total, itemsInCart, resolve);
         console.log(result);
       });
   };
 
   const saveOrder = (
-    visitorId: string,
-    storeId: string,
     conversationID: string,
     address: string,
     phoneNumber: number,
@@ -216,8 +204,8 @@ export const savePaymentRecord = (
         // Authorization: 'Bearer ' + localStorage.getItem('jwt'),
       },
       body: JSON.stringify({
-        sender: visitorId,
-        reciever: storeId,
+        sender: GloabaluserId,
+        reciever: GlobalstoreId,
         text: itemsInCart,
         conversationId: conversationID,
         address: address,
@@ -230,12 +218,12 @@ export const savePaymentRecord = (
       .then((res) => res.json())
       .then((result) => {
         // console.log(result);
-        clear(visitorId, storeId);
+        clear();
         resolve();
       });
   };
 
-  const clear = (visitorId: string, storeId: string) => {
+  const clear = () => {
     fetch('https://fingertipps.store/clear', {
       method: 'post',
       headers: {
@@ -243,8 +231,8 @@ export const savePaymentRecord = (
         Authorization: 'Bearer ' + localStorage.getItem('jwt'),
       },
       body: JSON.stringify({
-        ownId: visitorId,
-        storeId: storeId,
+        ownId: GloabaluserId,
+        storeId: GlobalstoreId,
       }),
     })
       .then((res) => res.json())
@@ -269,7 +257,7 @@ export const SearchProducts = (
     },
     body: JSON.stringify({
       search: searchQuery,
-      id: storeId,
+      id: GlobalstoreId,
       page: page ? page : 1,
     }),
   })
