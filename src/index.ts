@@ -244,12 +244,7 @@ export const savePaymentRecord = (
   submit();
 };
 
-export const SearchProducts = (
-  storeId: string,
-  searchQuery: string,
-  resolve: (result: object) => void,
-  page: number,
-) => {
+export const SearchProducts = (searchQuery: string, resolve: (result: object) => void, page: number) => {
   fetch('https://fingertipps.store/search', {
     method: 'post',
     headers: {
@@ -269,8 +264,8 @@ export const SearchProducts = (
     .catch((err) => {});
 };
 
-export const GetProducts = (storeId: string, page: number, resolve: (result: object) => void) => {
-  fetch(`https://fingertipps.store/user/collection1/${storeId}`, {
+export const GetProducts = (page: number, resolve: (result: object) => void) => {
+  fetch(`https://fingertipps.store/user/collection1/${GlobalstoreId}`, {
     method: 'post',
     headers: {
       'content-Type': 'application/json',
