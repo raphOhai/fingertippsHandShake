@@ -80,7 +80,7 @@ export const increaseItemCount = (
     body: JSON.stringify({
       id: item._id,
       owner: GloabaluserId,
-      store: GloabaluserId,
+      store: GlobalstoreId,
       name: item.name,
       choosenColor: item.choosenColor,
       choosenSize: item.choosenSize,
@@ -258,7 +258,7 @@ export const SearchProducts = (searchQuery: string, resolve: (result: object) =>
   })
     .then((res) => res.json())
     .then((results) => {
-      console.log(results);
+      // console.log(results);
       resolve(results);
     })
     .catch((err) => {});
