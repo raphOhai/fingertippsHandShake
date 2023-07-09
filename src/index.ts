@@ -8,7 +8,7 @@ export const InitializeHandShake = (apiley: string, storeId: string, userId: str
   GlobalstoreId = storeId;
 };
 
-export const getCartItems = (resolve: (result: object) => void) => {
+export const getCartItems = (visitorId:string, resolve: (result: object) => void) => {
   fetch('https://fingertipps.store/getcart', {
     method: 'post',
     headers: {
@@ -16,7 +16,7 @@ export const getCartItems = (resolve: (result: object) => void) => {
       // Authorization: "Bearer " + localStorage.getItem("jwt"),
     },
     body: JSON.stringify({
-      ownId: GloabaluserId,
+      ownId: visitorId,
       storeId: GlobalstoreId,
     }),
   })

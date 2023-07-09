@@ -1,6 +1,6 @@
 {
   "name": "fingertipps-handshakes",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "An easy way to interact with the fingertipps api",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
