@@ -1,4 +1,12 @@
-export const Greeter = (name: string) => `Hello ${name}`;
+let Globalapikey: string = '';
+let GlobalstoreId: string = '';
+let GloabaluserId: string = '';
+
+export const InitializeHandShake = (apiley: string, storeId: string, userId: string) => {
+  Globalapikey = apiley;
+  GloabaluserId = userId;
+  GlobalstoreId = storeId;
+};
 
 export const getCartItems = (store: string, quest: string, resolve: (result: object) => void) => {
   fetch('https://fingertipps.store/getcart', {
@@ -8,8 +16,8 @@ export const getCartItems = (store: string, quest: string, resolve: (result: obj
       // Authorization: "Bearer " + localStorage.getItem("jwt"),
     },
     body: JSON.stringify({
-      ownId: quest,
-      storeId: store,
+      ownId: GloabaluserId,
+      storeId: GlobalstoreId,
     }),
   })
     .then((res) => res.json())
@@ -36,7 +44,7 @@ export const addToCart = (
       Authorization: 'Bearer ' + localStorage.getItem('jwt'),
     },
     body: JSON.stringify({
-      owner: visitorId,
+      owner: GloabaluserId,
       price: item.price,
       photo: item.photos,
       count: 1,
@@ -44,7 +52,7 @@ export const addToCart = (
       name: item.name,
       choosenSize: item.choosenSize,
       choosenColor: item.choosenColor,
-      store: storeId,
+      store: GlobalstoreId,
     }),
   })
     .then((res) => res.json())
