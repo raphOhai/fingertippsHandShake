@@ -2,13 +2,13 @@ let Globalapikey: string = '';
 let GlobalstoreId: string = '';
 let GloabaluserId: string = '';
 
-export const InitializeHandShake = (apiley: string, storeId: string, userId: string) => {
-  Globalapikey = apiley;
+export const InitializeHandShake = (apikey: string, storeId: string, userId: string) => {
+  Globalapikey = apikey;
   GloabaluserId = userId;
   GlobalstoreId = storeId;
 };
 
-export const getCartItems = (visitorId:string, resolve: (result: object) => void) => {
+export const getCartItems = (visitorId: string, resolve: (result: object) => void) => {
   fetch('https://fingertipps.store/getcart', {
     method: 'post',
     headers: {
