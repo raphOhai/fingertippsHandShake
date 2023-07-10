@@ -9,11 +9,11 @@ export const InitializeHandShake = (apikey: string, storeId: string, userId: str
 };
 
 export const getCartItems = (visitorId: string, resolve: (result: object) => void) => {
-  fetch('https://fingertipps.store/getcart', {
+  fetch('https://fingertipps.store/dev/getcart', {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: "Bearer " + localStorage.getItem("jwt"),
+      Authorization: 'Bearer ' + Globalapikey,
     },
     body: JSON.stringify({
       ownId: visitorId,
@@ -35,11 +35,11 @@ export const addToCart = (
 ) => {
   // const store = "644ecffe38fa62672d349ebd";
   // const quest = JSON.parse(localStorage.getItem("quest"));
-  fetch('https://fingertipps.store/addtocart', {
+  fetch('https://fingertipps.store/dev/addtocart', {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      Authorization: 'Bearer ' + Globalapikey,
     },
     body: JSON.stringify({
       owner: GloabaluserId,
@@ -50,7 +50,7 @@ export const addToCart = (
       name: item.name,
       choosenSize: item.choosenSize,
       choosenColor: item.choosenColor,
-      store: GlobalstoreId,
+      // store: GlobalstoreId,
     }),
   })
     .then((res) => res.json())
@@ -71,16 +71,16 @@ export const increaseItemCount = (
   resolve: () => void,
 ) => {
   // dispatch(inscreaseItemCount(item));
-  fetch('https://fingertipps.store/increase', {
+  fetch('https://fingertipps.store/dev/increase', {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      Authorization: 'Bearer ' + Globalapikey,
     },
     body: JSON.stringify({
       id: item._id,
       owner: GloabaluserId,
-      store: GlobalstoreId,
+      // store: GlobalstoreId,
       name: item.name,
       choosenColor: item.choosenColor,
       choosenSize: item.choosenSize,
@@ -97,16 +97,16 @@ export const decreaseItemCount = (
   item: { _id: string; name: string; choosenColor: string; choosenSize: string },
   resolve: () => void,
 ) => {
-  fetch('https://fingertipps.store/decrease', {
+  fetch('https://fingertipps.store/dev/decrease', {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      Authorization: 'Bearer ' + Globalapikey,
     },
     body: JSON.stringify({
       id: item._id,
       owner: GloabaluserId,
-      store: GlobalstoreId,
+      // store: GlobalstoreId,
       name: item.name,
       choosenColor: item.choosenColor,
       choosenSize: item.choosenSize,
@@ -123,16 +123,16 @@ export const deleteSingleCartItem = (
   item: { _id: string; name: string; choosenColor: string; choosenSize: string },
   resolve: (data: number) => void,
 ) => {
-  fetch('https://fingertipps.store/deleteCart', {
+  fetch('https://fingertipps.store/dev/deleteCart', {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+      Authorization: 'Bearer ' + Globalapikey,
     },
     body: JSON.stringify({
       id: item._id,
       owner: GloabaluserId,
-      store: GlobalstoreId,
+      // store: GlobalstoreId,
       name: item.name,
       choosenColor: item.choosenColor,
       choosenSize: item.choosenSize,
@@ -167,15 +167,15 @@ export const savePaymentRecord = (
   const submit = () => {
     // dispatch(closeModal());
 
-    fetch('https://fingertipps.store/conversations', {
+    fetch('https://fingertipps.store/dev/conversations', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        Authorization: 'Bearer ' + Globalapikey,
       },
       body: JSON.stringify({
         senderId: GloabaluserId,
-        receiverId: GlobalstoreId,
+        // receiverId: GlobalstoreId,
         total,
         reference,
       }),
@@ -197,15 +197,15 @@ export const savePaymentRecord = (
     itemsInCart: Array<object>,
     resolve: () => void,
   ) => {
-    fetch('https://fingertipps.store/messages', {
+    fetch('https://fingertipps.store/dev/messages', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        Authorization: 'Bearer ' + Globalapikey,
       },
       body: JSON.stringify({
         sender: GloabaluserId,
-        reciever: GlobalstoreId,
+        // reciever: GlobalstoreId,
         text: itemsInCart,
         conversationId: conversationID,
         address: address,
@@ -224,15 +224,15 @@ export const savePaymentRecord = (
   };
 
   const clear = () => {
-    fetch('https://fingertipps.store/clear', {
+    fetch('https://fingertipps.store/dev/clear', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        Authorization: 'Bearer ' + Globalapikey,
       },
       body: JSON.stringify({
         ownId: GloabaluserId,
-        storeId: GlobalstoreId,
+        // storeId: GlobalstoreId,
       }),
     })
       .then((res) => res.json())
@@ -245,14 +245,15 @@ export const savePaymentRecord = (
 };
 
 export const SearchProducts = (searchQuery: string, resolve: (result: object) => void, page: number) => {
-  fetch('https://fingertipps.store/search', {
+  fetch('https://fingertipps.store/dev/search', {
     method: 'post',
     headers: {
       'content-Type': 'application/json',
+      Authorization: 'Bearer ' + Globalapikey,
     },
     body: JSON.stringify({
       search: searchQuery,
-      id: GlobalstoreId,
+      // id: GlobalstoreId,
       page: page ? page : 1,
     }),
   })
@@ -265,10 +266,11 @@ export const SearchProducts = (searchQuery: string, resolve: (result: object) =>
 };
 
 export const GetProducts = (page: number, resolve: (result: object) => void) => {
-  fetch(`https://fingertipps.store/user/collection1/${GlobalstoreId}`, {
+  fetch(`https://fingertipps.store/dev/user/collection1/`, {
     method: 'post',
     headers: {
       'content-Type': 'application/json',
+      Authorization: 'Bearer ' + Globalapikey,
     },
     body: JSON.stringify({
       page: page,
