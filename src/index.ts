@@ -1,11 +1,9 @@
 let Globalapikey: string = '';
-let GlobalstoreId: string = '';
 let GloabaluserId: string = '';
 
-export const InitializeHandShake = (apikey: string, storeId: string, userId: string) => {
+export const InitializeHandShake = (apikey: string, userId: string) => {
   Globalapikey = apikey;
   GloabaluserId = userId;
-  GlobalstoreId = storeId;
 };
 
 export const getCartItems = (visitorId: string, resolve: (result: object) => void) => {
@@ -17,7 +15,7 @@ export const getCartItems = (visitorId: string, resolve: (result: object) => voi
     },
     body: JSON.stringify({
       ownId: visitorId,
-      storeId: GlobalstoreId,
+      // storeId: GlobalstoreId,
     }),
   })
     .then((res) => res.json())
