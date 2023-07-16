@@ -280,3 +280,22 @@ export const GetProducts = (page: number, resolve: (result: object) => void) => 
     })
     .catch((err) => {});
 };
+
+
+export const clearCart = () => {
+  fetch('https://fingertipps.store/dev/clear', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + Globalapikey,
+    },
+    body: JSON.stringify({
+      ownId: GloabaluserId,
+      // storeId: GlobalstoreId,
+    }),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      // console.log(result);
+    });
+};
